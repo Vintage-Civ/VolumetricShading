@@ -17,13 +17,14 @@ layout(location = 2) out vec4 outTint;
 layout(location = 3) out vec4 outRefraction;
 #endif
 
+#include vertexflagbits.ash
 #include colormap.fsh
 
 
 void main()
 {
     // read shiny flag
-    if (((renderFlags >> 5) & 1) == 0) discard;
+    if ((renderFlags & ReflectiveBitMask) == 0) discard;
     vec4 color = texture(terrainTex, uv);
     if (color.a < 0.5) discard;
 
