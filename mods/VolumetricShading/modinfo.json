@@ -1,6 +1,6 @@
 {
   "type": "code",
-  "modid": "volumetricshading",
+  "modid": "volumetricshadingcontinued",
   "name": "Volumetric Shading",
   "authors": [ "xxmicloxx", "Novocain" ],
   "description": "Adds multiple shader changes to the game.",
