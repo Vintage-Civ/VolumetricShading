@@ -71,7 +71,7 @@ void main(void)
 	gnormal = modelViewMatrix * vec4(fragNormal.xyz, 0);
 	worldNormal = fragNormal;
     waterFlags = waterFlagsIn;
-	skyExposed = (renderFlags >> 13) & 1;
+	skyExposed = renderFlags & LiquidExposedToSkyBitMask;
 
 	flowVectorf = flowVector;
 	uv = uvIn;

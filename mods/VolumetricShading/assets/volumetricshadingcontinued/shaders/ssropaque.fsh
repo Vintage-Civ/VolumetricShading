@@ -24,7 +24,7 @@ layout(location = 3) out vec4 outRefraction;
 void main()
 {
     // read shiny flag
-    if ((renderFlags & ReflectiveBitMask) == 0) discard;
+    if ((renderFlags & ReflectiveBitMask) < 1) discard;
     vec4 color = texture(terrainTex, uv);
     if (color.a < 0.5) discard;
 

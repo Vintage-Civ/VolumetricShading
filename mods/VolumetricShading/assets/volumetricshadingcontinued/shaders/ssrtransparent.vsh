@@ -48,9 +48,8 @@ void main(void)
 	calcColorMapUvs(colormapData, vec4(vertexPositionIn + origin, 1.0) + vec4(playerpos, 1), rgbaLightIn.a, false);
 	
 	uv = uvIn;
-	
-	// Lower 8 bit is glow level
-	renderFlags = renderFlagsIn >> 8;  
+
+	renderFlags = renderFlagsIn;
 	
 	// Now the lowest 3 bits are used as an unsigned number 
 	// to fix Z-Fighting on blocks over certain other blocks. 
