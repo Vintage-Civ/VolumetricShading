@@ -55,12 +55,35 @@
     #endif
 
 - type: token
+  filename: instanced.fsh
+  tokens: outColor = applyFogAndShadowWithNormal(outColor, fogAmount, normal, 1, 0.45);
+  content: |
+    float glow = 0.0;
+    #if VSMOD_DEFERREDLIGHTING == 0
+    outColor = applyOverexposedFogAndShadow(outColor, fogAmount, normal, 1.0, 0.45, vertexPositionO, fogDensityIn, glow);
+    #endif
+
+- type: token
+  filename: instanced.vsh
+  tokens: calcShadowMapCoords(modelViewMatrix, worldPos);
+  content: |
+    #if VSMOD_DEFERREDLIGHTING == 0
+    calcShadowMapCoords(modelViewMatrix, worldPos);
+    #endif
+
+- type: token
+  filename: standard.fsh
+  tokens: outColor *= vec4(b, b, b, 1);
+  content: |
+    //outColor *= vec4(b, b, b, 1);
+
+- type: token
   filename: standard.fsh
   tokens: outColor = applyFogAndShadow(outColor, fogAmount);
   content: |
     float glow = 0.0;
     #if VSMOD_DEFERREDLIGHTING == 0
-    outColor = applyOverexposedFogAndShadowFlat(outColor, fogAmount, normal, vertexPosition.xyz, fogDensityIn, glow);
+    outColor = applyOverexposedFogAndShadow(outColor, fogAmount, normal, 1.0, 0.45, vertexPosition.xyz, fogDensityIn, glow);
     #endif
 
 - type: token

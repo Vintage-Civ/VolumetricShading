@@ -218,6 +218,29 @@
     uniform vec3 lightPosition;
     #endif
 
+- type: start
+  filename: instanced.fsh
+  content: |
+    in vec3 vertexPositionO;
+    uniform float fogDensityIn;
+
+- type: start
+  filename: instanced.vsh
+  content: out vec3 vertexPositionO;
+
+- type: token
+  filename: instanced.vsh
+  tokens: vec4 worldPos = transform * vec4(vertexPosition, 1.0);
+  content: |
+    vec4 worldPos = transform * vec4(vertexPosition, 1.0);
+    vertexPositionO = worldPos.xyz;
+
+- type: token
+  filename: standard.vsh
+  tokens: worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);
+  content: |
+    worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);
+
 - type: token
   filename: entityanimated.vsh
   tokens: worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);
