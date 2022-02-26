@@ -47,7 +47,9 @@ namespace VolumetricShading.Patch
             _capi.Assets.Reload(ShaderPatches);
             _capi.Assets.Reload(ShaderSnippets);
 
-            var assets = _capi.Assets.GetMany("shaderpatches", _domain);
+            var assets = _capi.Assets.GetMany("shaderpatches", _domain).ToArray();
+            Array.Sort(assets, (a, b) => a.Name.CompareTo(b.Name));
+
             foreach (var asset in assets)
             {
                 LoadFromYaml(asset.ToText());

@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>mods\VolumetricShading\</OutputPath>
+    <OutputPath>mods\VolumetricShadingContinued\</OutputPath>
     <IntermediateOutputPath>..\..\obj\Debug\volumetricshading\</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>mods\VolumetricShading\</OutputPath>
+    <OutputPath>mods\VolumetricShadingContinued\</OutputPath>
     <IntermediateOutputPath>..\..\obj\Release\volumetricshading\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>

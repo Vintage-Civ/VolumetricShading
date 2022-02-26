@@ -47,7 +47,7 @@ namespace VolumetricShading.Patch
                 if (!Optional)
                 {
                     throw new InvalidOperationException(
-                        $"Could not execute non-optional patch: Regex {Regex} not matched");
+                        $"Could not execute non-optional patch: Regex {Regex} not matched in code {code}");
                 }
 
                 return code;

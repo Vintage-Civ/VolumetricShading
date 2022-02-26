@@ -5,11 +5,11 @@ namespace VolumetricShading.Patch
 {
     public class TokenPatch : RegexPatch
     {
-        private const string TokenSeparators = ".,+-*/;{}[]()=:|^&?#";
-        private const string StartToken = "(^|[\\.,+\\-*/;{}[\\]()=:|^&?#\\s])";
-        private const string EndToken = "($|[\\.,+\\-*/;{}[\\]()=:|^&?#\\s])";
-        private const string OptionalRegexSeparator = "\\s*?";
-        private const string RegexSeparator = "\\s+?";
+        private const string TokenSeparators = @".,+-*/;{}[]()=:|^&?#";
+        private const string StartToken = @"(^|[\.,+\-*/;{}[\]()=:|^&?#\s])";
+        private const string EndToken = @"($|[\.,+\-*/;{}[\]()=:|^&?#\s])";
+        private const string OptionalRegexSeparator = @"\s*?";
+        private const string RegexSeparator = @"\s+?";
 
         private static Regex BuildRegex(string tokenStr)
         {

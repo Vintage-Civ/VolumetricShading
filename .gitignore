@@ -7,3 +7,4 @@ VolumetricShading.zip
 *.opendb
 *.db-wal
 *.db-shm
+/mods/VolumetricShading/VolumetricShadingContinued.zip
