@@ -182,7 +182,7 @@ float getFogLevelDeferred(float depth, float fogMin, float fogDensity, float wor
 
     float extraDistanceFog = max(-flatFogDensity * clampedDepth * (flatFogStart) / 60, 0); // div 60 was 160 before, at 160 thick flat fog looks broken when looking at trees
 
-    float distanceFog = 1 - 1 / exp(clampedDepth * (fogDensity + extraDistanceFog));
+    float distanceFog = 1 - 1 / exp(clampedDepth * fogDensity + extraDistanceFog);
     float flatFog = 1 - 1 / exp(heightDiff * flatFogDensity);
 
     float val = max(flatFog, distanceFog);
