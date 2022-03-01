@@ -1,0 +1,83 @@
+{
+    "Order": 4,
+    "Patches": [
+        {
+          "type": "token",
+          "filename": "chunktopsoil.fsh",
+          "tokens": "outColor = applyFogAndShadowWithNormal(outColor, fogAmount, normal, 1, intensity);",
+          "content": "float glow = 0.0;\n#if VSMOD_DEFERREDLIGHTING == 0\noutColor = applyOverexposedFogAndShadow(outColor, fogAmount, normal, 1.0, intensity, vertexPosition, fogDensityIn, glow);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\ncalcShadowMapCoords(modelViewMatrix, worldPos);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.fsh",
+          "tokens": "outColor = applyFogAndShadowWithNormal(texColor, fogAmount, normal, 1, intensity);",
+          "content": "float glow = 0.0;\n#if VSMOD_DEFERREDLIGHTING > 0\noutColor = texColor;\n#else\noutColor = applyOverexposedFogAndShadow(texColor, fogAmount, normal, 1.0, intensity, vertexPosition, fogDensityIn, glow);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\ncalcShadowMapCoords(modelViewMatrix, worldPos);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.fsh",
+          "tokens": "outColor = applyFogAndShadowWithNormal(texColor, fogAmount, normal, 1, intensity);",
+          "content": "float glow = 0.0;\n#if VSMOD_DEFERREDLIGHTING > 0\noutColor = texColor;\n#else\noutColor = applyOverexposedFogAndShadow(texColor, fogAmount, normal, 1.0, intensity, vertexPosition, fogDensityIn, glow);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.vsh",
+          "tokens": "calcShadowMapCoords(viewMatrix, worldPos);",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\ncalcShadowMapCoords(viewMatrix, worldPos);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "instanced.fsh",
+          "tokens": "outColor = applyFogAndShadowWithNormal(outColor, fogAmount, normal, 1, 0.45);",
+          "content": "float glow = 0.0;\n#if VSMOD_DEFERREDLIGHTING == 0\noutColor = applyOverexposedFogAndShadow(outColor, fogAmount, normal, 1.0, 0.45, vertexPositionO, fogDensityIn, glow);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "instanced.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\ncalcShadowMapCoords(modelViewMatrix, worldPos);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "outColor *= vec4(b, b, b, 1);",
+          "content": "//outColor *= vec4(b, b, b, 1);\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "outColor = applyFogAndShadow(outColor, fogAmount);",
+          "content": "float glow = 0.0;\n#if VSMOD_DEFERREDLIGHTING == 0\noutColor = applyOverexposedFogAndShadow(outColor, fogAmount, normal, 1.0, 0.45, vertexPosition.xyz, fogDensityIn, glow);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.vsh",
+          "tokens": "calcShadowMapCoords(viewMatrix, worldPos);",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\ncalcShadowMapCoords(viewMatrix, worldPos);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.fsh",
+          "tokens": "vec4(glowLevel + glow, godrayLevel, 0, outColor.a);",
+          "content": "\n #if SHADOWQUALITY > 0\n vec4(glowLevel + glow, godrayLevel, blockBrightness, outColor.a);\n #else\n vec4(glowLevel + glow, godrayLevel, 0, outColor.a);\n #endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "vec4(glowLevel + glow, extraGodray - fogAmount, 0, outColor.a);",
+          "content": "\n #if SHADOWQUALITY > 0\n vec4(glowLevel + glow, extraGodray - fogAmount, blockBrightness, outColor.a);\n #else\n vec4(glowLevel + glow, extraGodray - fogAmount, 0, outColor.a);\n #endif\n"
+        }
+      ]
+}

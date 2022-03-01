@@ -13,11 +13,11 @@ namespace VolumetricShading.Patch
         public readonly List<IShaderPatch> Patches = new List<IShaderPatch>();
         public readonly Dictionary<string, string> Cache = new Dictionary<string, string>();
         
-        private readonly YamlPatchLoader _yamlPatchLoader;
+        private readonly JsonPatchLoader _yamlPatchLoader;
 
         public ShaderPatcher(ICoreClientAPI capi, string domain)
         {
-            _yamlPatchLoader = new YamlPatchLoader(this, domain, capi);
+            _yamlPatchLoader = new JsonPatchLoader(this, domain, capi);
         }
 
         public void Reload()

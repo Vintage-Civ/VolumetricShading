@@ -1,0 +1,133 @@
+{
+    "Order": 3,
+    "Patches": [
+        {
+          "type": "token",
+          "filename": "fogandlight.fsh",
+          "tokens": "nb = max(nb, dot(normalize(normal), vec3(0, 1, 0)) * 0.95);",
+          "content": "float factor = 0.95f;\nfactor = clamp(factor - 0.35f * VSMOD_OVEREXPOSURE, 0.0f, 1.0f);\nnb = max(nb, dot(normalize(normal), vec3(0, 1, 0)) * factor);\n"
+        },
+        {
+          "type": "token",
+          "filename": "fogandlight.fsh",
+          "tokens": "float getFogLevel",
+          "snippet": "overexposureapply.txt"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.fsh",
+          "tokens": "float glow = 0;",
+          "content": ""
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.fsh",
+          "tokens": "glow = pow",
+          "content": "glow += pow"
+        },
+        {
+          "type": "start",
+          "filename": "chunktopsoil.fsh",
+          "content": "uniform float fogDensityIn;"
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.fsh",
+          "tokens": "float glow = 0;",
+          "content": ""
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.fsh",
+          "tokens": "glow = pow",
+          "content": "glow += pow"
+        },
+        {
+          "type": "start",
+          "filename": "chunktransparent.fsh",
+          "content": "uniform float fogDensityIn;"
+        },
+        {
+          "type": "token",
+          "filename": "chunktransparent.fsh",
+          "tokens": "void drawPixel(vec4 color)",
+          "content": "void drawPixel(vec4 color, float glow)"
+        },
+        {
+          "type": "token",
+          "filename": "chunktransparent.fsh",
+          "tokens": "texColor = applyFogAndShadowWithNormal(texColor, fogAmount, normal, normalShadeIntensity, 0.45);",
+          "content": "float glow = 0.0;\ntexColor = applyOverexposedFogAndShadow(texColor, fogAmount, normal, normalShadeIntensity, 0.45, worldPos.xyz, fogDensityIn, glow);\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunktransparent.fsh",
+          "tokens": "drawPixel(texColor);",
+          "content": "drawPixel(texColor, glow);"
+        },
+        {
+          "type": "token",
+          "filename": "chunktransparent.fsh",
+          "tokens": "outGlow = vec4(glowLevel",
+          "content": "outGlow = vec4(glowLevel + glow"
+        },
+        {
+          "type": "start",
+          "filename": "entityanimated.fsh",
+          "content": "uniform float fogDensityIn;"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.fsh",
+          "tokens": "float glow = 0;",
+          "content": ""
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.fsh",
+          "tokens": "glow = pow",
+          "content": "glow += pow"
+        },
+        {
+          "type": "start",
+          "filename": "standard.fsh",
+          "content": "uniform float extraOutGlow = 0.0;\nuniform float fogDensityIn;\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "in vec3 normal;",
+          "content": "in vec3 normal;\nin vec4 vertexPosition;\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "float glow = 0;",
+          "content": ""
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "glow = pow",
+          "content": "glow += pow"
+        },
+        {
+          "type": "token",
+          "filename": "standard.fsh",
+          "tokens": "outGlow = vec4",
+          "content": "glow += extraOutGlow;\noutGlow = vec4\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.vsh",
+          "tokens": "out vec3 normal;",
+          "content": "out vec3 normal;\nout vec4 vertexPosition;\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.vsh",
+          "tokens": "vec4 camPos =",
+          "content": "vertexPosition = worldPos;\nvec4 camPos =\n"
+        }
+      ]
+}

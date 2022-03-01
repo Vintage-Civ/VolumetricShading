@@ -1,0 +1,253 @@
+{
+    "Order": 0,
+    "Patches": [
+        {
+          "type": "start",
+          "filename": "fogandlight.fsh",
+          "content": "#if GODRAYS > 0\nin vec4 shadowRayStart;\nin vec4 shadowLightPos;\nin float sunlightLevel;\n#endif\n\n#define VOLUMETRIC_SSAO_DECLINE 0.5f\n"
+        },
+        {
+          "type": "end",
+          "filename": "fogandlight.fsh",
+          "snippet": "volumetricscatter.txt"
+        },
+        {
+          "type": "start",
+          "filename": "shadowcoords.vsh",
+          "content": "#if GODRAYS > 0\nuniform vec4 cameraWorldPosition;\nout vec4 shadowRayStart;\nout vec4 shadowLightPos;\nout float sunlightLevel;\n#endif\n"
+        },
+        {
+          "type": "end",
+          "filename": "shadowcoords.vsh",
+          "snippet": "volumetricshadowcoords.txt"
+        },
+        {
+          "type": "token",
+          "filename": "skycolor.fsh",
+          "tokens": "clamp(V2.y/4 + (vl/2 - 0.3) , 0, 0.5);",
+          "content": "clamp(V2.y/4 + (vl/2 - 0.3) , 0, 0.5) * 0.5f;"
+        },
+        {
+          "type": "token",
+          "filename": "skycolor.fsh",
+          "tokens": "vec4(0, intensity - fogAmount/2, 0, 1);",
+          "content": "vec4(intensity - fogAmount/2, intensity - fogAmount/2, 0, 1);"
+        },
+        {
+          "type": "token",
+          "filename": "celestialobject.fsh",
+          "tokens": "vec4(glowLevel, extraGodray, 0, texColor.a);",
+          "content": "vec4(glowLevel, 0.2f, 0, texColor.a);"
+        },
+        {
+          "type": "token",
+          "filename": "chunkliquid.fsh",
+          "tokens": "outGlow = vec4(glowLevel, 0, 0, color.a);",
+          "content": "float scatterAmt = calculateVolumetricScatter(fWorldPos);\noutGlow = vec4(glowLevel, scatterAmt, 0, color.a);\n"
+        },
+        {
+          "type": "start",
+          "filename": "chunkliquid.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "chunkliquid.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "calcShadowMapCoords(modelViewMatrix, worldPos);\n#if GODRAYS > 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.fsh",
+          "tokens": "#if SSAOLEVEL > 0 outGPosition",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\ngodrayLevel = calculateVolumetricScatter(vertexPosition);\n#else\ngodrayLevel = 0.0;\n#endif\n#if SSAOLEVEL > 0\noutGPosition\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.fsh",
+          "tokens": "vec4(fragPosition.xyz, fogAmount + glowLevel);",
+          "content": "vec4(fragPosition.xyz, fogAmount + glowLevel + godrayLevel * VOLUMETRIC_SSAO_DECLINE);"
+        },
+        {
+          "type": "start",
+          "filename": "chunkopaque.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "chunkopaque.vsh",
+          "tokens": "normal = unpackNormal(renderFlagsIn);",
+          "content": "normal = unpackNormal(renderFlagsIn);\n#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.fsh",
+          "tokens": "#if SSAOLEVEL > 0 outGPosition",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\nfloat scatterAmt = calculateVolumetricScatter(vertexPosition);\n#else\nfloat scatterAmt = 0.0;\n#endif\n#if SSAOLEVEL > 0\noutGPosition\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.fsh",
+          "tokens": "vec4(fragPosition.xyz, fogAmount + glowLevel);",
+          "content": "vec4(fragPosition.xyz, fogAmount + glowLevel + scatterAmt * VOLUMETRIC_SSAO_DECLINE);"
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.fsh",
+          "tokens": "vec4(glowLevel + glow, 0, 0, outColor.a);",
+          "content": "\n #if SHADOWQUALITY > 0\n vec4(glowLevel + glow, scatterAmt, blockBrightness, outColor.a);\n #else\n vec4(glowLevel + glow, scatterAmt, 0, outColor.a);\n #endif\n"
+        },
+        {
+          "type": "start",
+          "filename": "chunktopsoil.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "chunktopsoil.vsh",
+          "tokens": "normal = unpackNormal(renderFlags);",
+          "content": "normal = unpackNormal(renderFlags);\n#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "chunktransparent.fsh",
+          "tokens": "outGlow = vec4(glowLevel, 0, 0, color.a);",
+          "content": "float scatterAmt = calculateVolumetricScatter(worldPos.xyz);\noutGlow = vec4(glowLevel, scatterAmt, 0, color.a);\n"
+        },
+        {
+          "type": "start",
+          "filename": "chunktransparent.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "chunktransparent.vsh",
+          "tokens": "normalShadeIntensity = min(1, rgbaLightIn.a * 1.5);",
+          "content": "normalShadeIntensity = min(1, rgbaLightIn.a * 1.5);\n#if GODRAYS > 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "clouds.fsh",
+          "tokens": "outGlow = vec4(glow, 0",
+          "content": "float actOut = 0.0f;\n#if GODRAYS > 0\n\tfloat normalOut = 0.1f;\n\tfloat intensity = dot(normalize(shadowCoordsFar.xyz-shadowRayStart.xyz),  normalize(shadowLightPos.xyz-shadowRayStart.xyz));\n\tfloat phase = 2.5+exp(intensity*3.0)/3.0;\n\tactOut = pow(phase * normalOut, VOLUMETRIC_FLATNESS);\n#endif\noutGlow = vec4(glow, actOut\n"
+        },
+        {
+          "type": "start",
+          "filename": "clouds.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "clouds.vsh",
+          "tokens": "rgbaCloud.a = clamp(rgbaCloud.a, 0, 1);",
+          "content": "rgbaCloud.a = clamp(rgbaCloud.a, 0, 1);\n#if GODRAYS > 0\nprepareVolumetricLightingFlat(lightPosition);\n#endif\ncalcShadowMapCoords(modelViewMatrix, vec4(vexPos, 1.0));\n"
+        },
+        {
+          "type": "start",
+          "filename": "entityanimated.fsh",
+          "content": "in vec3 vertexPosition;"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.fsh",
+          "tokens": "#if SSAOLEVEL > 0 outGPosition",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\nfloat scatterAmt = calculateVolumetricScatter(vertexPosition);\n#else\nfloat scatterAmt = 0.0;\n#endif\n#if SSAOLEVEL > 0\noutGPosition\n"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.fsh",
+          "tokens": "vec4(fragPosition.xyz, fogAmount + glowLevel);",
+          "content": "vec4(fragPosition.xyz, fogAmount + glowLevel + scatterAmt * VOLUMETRIC_SSAO_DECLINE);"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.fsh",
+          "tokens": "vec4(glowLevel + glow, 0, 0, color.a);",
+          "content": "\n #if SHADOWQUALITY > 0\n vec4(glowLevel + glow, scatterAmt, blockBrightness, color.a);\n #else\n vec4(glowLevel + glow, scatterAmt, 0, color.a);\n #endif\n"
+        },
+        {
+          "type": "start",
+          "filename": "entityanimated.vsh",
+          "content": "out vec3 vertexPosition;\n#if GODRAYS > 0\nuniform vec3 lightPosition;\n#endif\n"
+        },
+        {
+          "type": "start",
+          "filename": "instanced.fsh",
+          "content": "in vec3 vertexPositionO;\nuniform float fogDensityIn;\n"
+        },
+        {
+          "type": "start",
+          "filename": "instanced.vsh",
+          "content": "out vec3 vertexPositionO;"
+        },
+        {
+          "type": "token",
+          "filename": "instanced.vsh",
+          "tokens": "vec4 worldPos = transform * vec4(vertexPosition, 1.0);",
+          "content": "vec4 worldPos = transform * vec4(vertexPosition, 1.0);\nvertexPositionO = worldPos.xyz;\n"
+        },
+        {
+          "type": "token",
+          "filename": "standard.vsh",
+          "tokens": "worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);",
+          "content": "worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);\n"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.vsh",
+          "tokens": "worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);",
+          "content": "worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);\nvertexPosition = worldPos.xyz;\n"
+        },
+        {
+          "type": "token",
+          "filename": "entityanimated.vsh",
+          "tokens": "#if SSAOLEVEL > 0 fragPosition",
+          "content": "#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n#if SSAOLEVEL > 0\nfragPosition\n"
+        },
+        {
+          "type": "regex",
+          "filename": "final.fsh",
+          "regex": "#\\s*if\\s+GODRAYS\\s*>\\s*0[^#]*",
+          "snippet": "volumetricfinal.txt"
+        },
+        {
+          "type": "token",
+          "filename": "sky.fsh",
+          "tokens": "outGlow.y *= clamp((dayLight - 0.05) * 2, 0, 1);",
+          "content": "#if GODRAYS > 0\nfloat normalOut = 0.5f*dayLight;\nfloat intensity = dot(normalize(shadowCoordsFar.xyz-shadowRayStart.xyz), normalize(shadowLightPos.xyz-shadowRayStart.xyz));\nfloat phase = 2.5+exp(intensity*3.0)/3.0;\noutGlow.y = pow(phase * normalOut, VOLUMETRIC_FLATNESS);\n#endif\n"
+        },
+        {
+          "type": "start",
+          "filename": "sky.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "sky.vsh",
+          "tokens": "gl_Position = projectionMatrix * cameraPos;",
+          "content": "calcShadowMapCoords(modelViewMatrix, vec4(vertexPosition, 1.0));\n#if GODRAYS > 0\nprepareVolumetricLightingFlat(lightPosition);\n#endif\ngl_Position = projectionMatrix * cameraPos;\n"
+        },
+        {
+          "type": "start",
+          "filename": "mechpower.fsh",
+          "content": "in vec3 vertPos;"
+        },
+        {
+          "type": "token",
+          "filename": "mechpower.fsh",
+          "tokens": "outGlow = vec4(glowLevel, 0, 0, outColor.a);",
+          "content": "#if VSMOD_DEFERREDLIGHTING == 0\nfloat scatterAmt = calculateVolumetricScatter(vertPos);\n#else\nfloat scatterAmt = 0.0;\n#endif\noutGlow = vec4(glowLevel, scatterAmt, 0, outColor.a);\n"
+        },
+        {
+          "type": "start",
+          "filename": "mechpower.vsh",
+          "content": "out vec3 vertPos;\n#if GODRAYS > 0\nuniform vec3 lightPosition;\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "mechpower.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "vertPos = worldPos.xyz;\ncalcShadowMapCoords(modelViewMatrix, worldPos);\n#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaBlockIn);\n#endif\n"
+        }
+      ]
+}
