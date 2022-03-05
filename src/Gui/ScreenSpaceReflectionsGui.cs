@@ -39,7 +39,15 @@ namespace VolumetricShading.Gui
                 Tooltip = "Enables reflecting grass when raining",
                 ToggleAction = ToggleRainReflections
             });
-            
+
+            RegisterOption(new ConfigOption
+            {
+                SwitchKey = "toggleBlur",
+                Text = "Reflection blurring",
+                Tooltip = "The blurring of reflections",
+                ToggleAction = ToggleBlur
+            });
+
             RegisterOption(new ConfigOption
             {
                 SliderKey = "dimmingSlider",
@@ -47,7 +55,7 @@ namespace VolumetricShading.Gui
                 Tooltip = "The dimming effect strength on the reflected image",
                 SlideAction = OnDimmingSliderChanged
             });
-            
+
             RegisterOption(new ConfigOption
             {
                 SliderKey = "transparencySlider",
@@ -87,12 +95,21 @@ namespace VolumetricShading.Gui
             SingleComposer.GetSwitch("toggleRefractions").SetValue(ModSettings.SSRRefractionsEnabled);
             SingleComposer.GetSwitch("toggleCaustics").SetValue(ModSettings.SSRCausticsEnabled);
             SingleComposer.GetSwitch("toggleRainReflections").SetValue(ModSettings.SSRRainReflectionsEnabled);
+            SingleComposer.GetSwitch("toggleBlur").SetValue(ModSettings.SSRBlurEnabled);
             SingleComposer.GetSlider("dimmingSlider").SetValues(ModSettings.SSRReflectionDimming, 1, 400, 1);
             SingleComposer.GetSlider("transparencySlider").SetValues(ModSettings.SSRWaterTransparency, 0, 100, 1);
             SingleComposer.GetSlider("tintSlider").SetValues(ModSettings.SSRTintInfluence, 0, 100, 1);
             SingleComposer.GetSlider("skyMixinSlider").SetValues(ModSettings.SSRSkyMixin, 0, 100, 1);
-            SingleComposer.GetSlider("splashTransparencySlider")
-                .SetValues(ModSettings.SSRSplashTransparency, 0, 100, 1);
+            SingleComposer.GetSlider("splashTransparencySlider").SetValues(ModSettings.SSRSplashTransparency, 0, 100, 1);
+        }
+
+        private void ToggleBlur(bool on)
+        {
+            ModSettings.SSRBlurEnabled = on;
+
+            capi.GetClientPlatformAbstract().RebuildFrameBuffers();
+            capi.Shader.ReloadShaders();
+            RefreshValues();
         }
 
         private void ToggleSSR(bool on)

@@ -12,6 +12,16 @@
 
 #if VSMOD_SSR > 0
     vec4 ssr = texture(ssrScene, texCoord);
+#if VSMOD_SSR_BLUR > 0
+    vec4 ssrB = texture(ssrBlur, texCoord);
+    float diff = ssrB.a;
+    diff -= 0.5;
+    diff *= 2.0;
+    diff = 1.0 - abs(diff);
+    //diff = ssr.a > 0.5 ? diff : 0.0;
+    
+    ssr.rgb = mix(ssr.rgb, ssrB.rgb, diff);
+#endif
     color.rgb = mix(color.rgb, ssr.rgb, ssr.a);
 #endif
 

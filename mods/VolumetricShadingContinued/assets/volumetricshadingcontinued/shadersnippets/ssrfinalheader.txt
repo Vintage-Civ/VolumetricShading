@@ -2,6 +2,9 @@ uniform sampler2D ssaoScene;
 
 #if VSMOD_SSR > 0
 uniform sampler2D ssrScene;
+#if VSMOD_SSR_BLUR > 0
+uniform sampler2D ssrBlur;
+#endif
 
 #if VSMOD_REFRACT > 0 || VSMOD_CAUSTICS > 0
 uniform mat4 projectionMatrix;

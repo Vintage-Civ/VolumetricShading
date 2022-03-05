@@ -95,6 +95,14 @@ namespace VolumetricShading
 
         public static bool SSRSkyMixinSet => ClientSettings.Inst.Int.Exists("volumetricshading_SSRSkyMixin");
 
+        public static bool SSRBlurEnabled
+        {
+            get => ClientSettings.Inst.GetBoolSetting("volumetricshading_SSRBlur");
+            set => ClientSettings.Inst.Bool["volumetricshading_SSRBlur"] = value;
+        }
+
+        public static bool SSRBlurSet => ClientSettings.Inst.Bool.Exists("volumetricshading_SSRBlur");
+
         public static int OverexposureIntensity
         {
             get => ClientSettings.Inst.GetIntSetting("volumetricshading_overexposureIntensity");
