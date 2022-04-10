@@ -12,17 +12,32 @@
 
 #if VSMOD_SSR > 0
     vec4 ssr = texture(ssrScene, texCoord);
-#if VSMOD_SSR_BLUR > 0
-    vec4 ssrB = texture(ssrBlur, texCoord);
-    float diff = ssrB.a;
-    diff -= 0.5;
-    diff *= 2.0;
-    diff = 1.0 - abs(diff);
-    //diff = ssr.a > 0.5 ? diff : 0.0;
+    #if VSMOD_SSR_BLUR > 0
+        const float Pi = 6.28318530718; // Pi*2
+
+        const float Directions = 8.0;
+        const float Quality = 4.0;
+        const float Size = 2.0;
     
-    ssr.rgb = mix(ssr.rgb, ssrB.rgb, diff);
-#endif
+        vec2 Radius = Size / textureSize(ssrScene, 0);
+        
+        int iterations = 0;
+        ssr.rgb = vec3(0);
+
+        for( float d=0.0; d<Pi; d+=Pi/Directions)
+        {
+            for(float i=1.0/Quality; i<=1.0; i+=1.0/Quality)
+            {
+                ssr.rgb += texture(ssrScene, texCoord+vec2(cos(d),sin(d))*Radius*i).rgb;
+                iterations++;
+            }
+        }
+        
+        ssr.rgb /= iterations;
+    #endif
+
     color.rgb = mix(color.rgb, ssr.rgb, ssr.a);
+    //color.rgb = vec3(Size);
 #endif
 
 #if BLOOM == 1

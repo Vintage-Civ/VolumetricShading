@@ -16,8 +16,6 @@ namespace VolumetricShading.Effects
         SSR,
         Out,
         Caustics,
-        BlurHor,
-        BlurVert,
 
         Count
     }
@@ -292,29 +290,6 @@ namespace VolumetricShading.Effects
                 _framebuffers[(int) EnumSSRFB.Caustics] = framebuffer;
             }
 
-            if (_blurEnabled)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    framebuffer = new FrameBufferRef
-                    {
-                        FboId = GL.GenFramebuffer(),
-                        Width = _fbWidth,
-                        Height = _fbHeight
-                    };
-
-                    GL.BindFramebuffer(FramebufferTarget.Framebuffer, framebuffer.FboId);
-
-                    framebuffer.ColorTextureIds = new[] { GL.GenTexture() };
-
-                    framebuffer.SetupColorTexture(0);
-
-                    GL.DrawBuffer(DrawBufferMode.ColorAttachment0);
-                    Framebuffers.CheckStatus();
-                    _framebuffers[(int)EnumSSRFB.BlurHor + i] = framebuffer;
-                }
-            }
-
             _screenQuad = _platform.GetScreenQuad();
         }
 
@@ -363,8 +338,6 @@ namespace VolumetricShading.Effects
         private void OnRenderSsrOut()
         {
             var ssrOutFB = _framebuffers[(int) EnumSSRFB.Out];
-            var ssrBlurFBHor = _framebuffers[(int)EnumSSRFB.BlurHor];
-            var ssrBlurFBVert = _framebuffers[(int)EnumSSRFB.BlurVert];
             var ssrCausticsFB = _framebuffers[(int) EnumSSRFB.Caustics];
             var ssrFB = _framebuffers[(int) EnumSSRFB.SSR];
             
@@ -447,41 +420,6 @@ namespace VolumetricShading.Effects
                 _platform.RenderFullscreenTriangle(_screenQuad);
                 shader.Stop();
                 _platform.CheckGlError("Error while calculating caustics");
-            }
-            
-            if (_blurEnabled)
-            {
-                _platform.LoadFrameBuffer(ssrBlurFBHor);
-                GL.ClearBuffer(ClearBuffer.Color, 0, new[] { 0f, 0f, 0f, 1f });
-
-                _platform.LoadFrameBuffer(ssrBlurFBVert);
-                GL.ClearBuffer(ClearBuffer.Color, 0, new[] { 0f, 0f, 0f, 1f });
-
-                ShaderProgramBilateralblur progblur = ShaderPrograms.Bilateralblur;
-                progblur.Use();
-
-                for (int i = 0; i < 2; i++)
-                {
-                    // med res hor blur
-                    var fb = ssrBlurFBHor;
-                    _platform.LoadFrameBuffer(ssrBlurFBHor);
-                    progblur.FrameSize = new Vec2f(fb.Width, fb.Height);
-                    progblur.IsVertical = 0;
-                    progblur.InputTexture2D = (i == 0 ? ssrOutFB : ssrBlurFBHor).ColorTextureIds[0];
-                    progblur.DepthTexture2D = _platform.FrameBuffers[(int)EnumFrameBuffer.Primary].DepthTextureId;
-                    _platform.RenderFullscreenTriangle(_screenQuad);
-
-                    // med res ver blur
-                    _platform.LoadFrameBuffer(ssrBlurFBVert);
-                    progblur.IsVertical = 1;
-                    progblur.FrameSize = new Vec2f(fb.Width, fb.Height);
-                    progblur.InputTexture2D = ssrBlurFBHor.ColorTextureIds[0];
-                    progblur.DepthTexture2D = _platform.FrameBuffers[(int)EnumFrameBuffer.Primary].DepthTextureId;
-                    _platform.RenderFullscreenTriangle(_screenQuad);
-                }
-                progblur.Stop();
-
-                _platform.CheckGlError("Error while blurring SSR");
             }
 
             _platform.LoadFrameBuffer(EnumFrameBuffer.Primary);
@@ -624,15 +562,6 @@ namespace VolumetricShading.Effects
             if (ssrOutFB == null) return;
 
             final.BindTexture2D("ssrScene", ssrOutFB.ColorTextureIds[0]);
-            if (_blurEnabled)
-            {
-                var ssrBlurFBVert = _framebuffers[(int)EnumSSRFB.BlurVert];
-                if (ssrBlurFBVert != null)
-                {
-                    final.BindTexture2D("ssrBlur", ssrBlurFBVert.ColorTextureIds[0]);
-                }
-            }
-            
 
             if ((_refractionsEnabled || _causticsEnabled) && ssrFB != null)
             {
