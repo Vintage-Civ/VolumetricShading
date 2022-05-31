@@ -32,6 +32,14 @@ namespace VolumetricShading.Gui
                 Tooltip = "Defines how noticeable the difference between low and high scattering is",
                 SlideAction = OnFlatnessSliderChanged
             });
+
+            RegisterOption(new ConfigOption
+            {
+                SliderKey = "blurMulSlider",
+                Text = "Blur Multiplier",
+                Tooltip = "Changes the multiplier used for the blur shader.",
+                SlideAction = OnBlurMulChanged
+            });
         }
 
         protected override void RefreshValues()
@@ -43,6 +51,8 @@ namespace VolumetricShading.Gui
                 ModSettings.VolumetricLightingFlatness, 1, 199, 1);
             SingleComposer.GetSlider("intensitySlider").SetValues(
                 ModSettings.VolumetricLightingIntensity, 1, 100, 1);
+            SingleComposer.GetSlider("blurMulSlider").SetValues(
+                ModSettings.BlurMul, 1, 8, 1);
         }
 
         private void ToggleVolumetricLighting(bool on)
@@ -69,6 +79,14 @@ namespace VolumetricShading.Gui
         private bool OnIntensitySliderChanged(int value)
         {
             ModSettings.VolumetricLightingIntensity = value;
+            capi.Shader.ReloadShaders();
+            RefreshValues();
+            return true;
+        }
+
+        private bool OnBlurMulChanged(int value)
+        {
+            ModSettings.BlurMul = value;
             capi.Shader.ReloadShaders();
             RefreshValues();
             return true;

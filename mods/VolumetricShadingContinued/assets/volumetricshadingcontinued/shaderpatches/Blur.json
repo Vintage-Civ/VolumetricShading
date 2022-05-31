@@ -5,13 +5,13 @@
           "type": "token",
           "filename": "blur.vsh",
           "tokens": "vec2(0, pixelSize * i)",
-          "content": "vec2(0, pixelSize * i * 4)"
+          "content": "vec2(0, pixelSize * i * BLUR_MUL)"
         },
         {
           "type": "token",
           "filename": "blur.vsh",
           "tokens": "vec2(pixelSize * i, 0)",
-          "content": "vec2(pixelSize * i * 4, 0)"
+          "content": "vec2(pixelSize * i * BLUR_MUL, 0)"
         }
     ]
 }

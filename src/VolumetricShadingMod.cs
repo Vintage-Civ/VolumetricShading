@@ -104,6 +104,11 @@ namespace VolumetricShading
                 ModSettings.VolumetricLightingFlatness = 140;
             }
 
+            if (ModSettings.BlurMul == 0)
+            {
+                ModSettings.BlurMul = 4;
+            }
+
             if (ModSettings.VolumetricLightingIntensity == 0)
             {
                 ModSettings.VolumetricLightingIntensity = 50;

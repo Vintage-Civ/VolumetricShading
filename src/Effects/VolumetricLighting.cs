@@ -42,6 +42,8 @@ namespace VolumetricShading.Effects
 
             injector.RegisterFloatProperty("VOLUMETRIC_INTENSITY",
                 () => ModSettings.VolumetricLightingIntensity * 0.01f);
+            
+            injector.RegisterIntProperty("BLUR_MUL", () => ModSettings.BlurMul);
         }
 
         private static void OnShadowMapChanged(int quality)

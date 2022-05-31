@@ -159,7 +159,6 @@ namespace VolumetricShading
                     ext = ".gsh";
                     break;
             }
-
             var filename = shader.PassName + ext;
             code = VolumetricShadingMod.Instance.ShaderPatcher.Patch(filename, code);
             return HandleIncludes(shader, code);

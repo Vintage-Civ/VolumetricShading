@@ -4,6 +4,12 @@ namespace VolumetricShading
 {
     public static class ModSettings
     {
+        public static int BlurMul
+        {
+            get => ClientSettings.Inst.GetIntSetting("volumetricshading_blurMul");
+            set => ClientSettings.Inst.Int["volumetricshading_blurMul"] = value;
+        }
+
         public static bool ScreenSpaceReflectionsEnabled
         {
             get => ClientSettings.Inst.GetBoolSetting("volumetricshading_screenSpaceReflections");
