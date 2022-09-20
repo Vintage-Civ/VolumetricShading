@@ -6,7 +6,9 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.Client;
 using Vintagestory.Client.NoObf;
+using Vintagestory.Common;
 
 namespace VolumetricShading
 {
@@ -22,7 +24,7 @@ namespace VolumetricShading
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> PostprocessingTranspiler(IEnumerable<CodeInstruction> instructions)
         {
-            var found = false;
+            bool found = false;
             foreach (var instruction in instructions)
             {
                 yield return instruction;
@@ -34,7 +36,7 @@ namespace VolumetricShading
                 found = true;
             }
 
-            if (found is false)
+            if (!found)
             {
                 throw new Exception("Could not patch RenderPostprocessingEffects!");
             }
@@ -111,11 +113,10 @@ namespace VolumetricShading
 
         [HarmonyPatch("HandleIncludes")]
         [HarmonyReversePatch]
-        public static string HandleIncludes(ShaderProgram program, string code)
+        public static string HandleIncludes(ShaderProgram program, string code, HashSet<string> filenames = null)
         {
             throw new InvalidOperationException("Stub, replaced by Harmony");
         }
-        
         [HarmonyPatch("LoadShader")]
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> LoadShaderTranspiler(IEnumerable<CodeInstruction> instructions)
@@ -126,9 +127,14 @@ namespace VolumetricShading
                 if (instruction.Calls(HandleIncludesMethod))
                 {
                     found = true;
-                    // current stack: ShaderProgram, string (shader code)
-                    // load EnumShaderType to stack
+                    // current eval stack: ShaderProgram, string (shader code), null
+                    
+                    // pop null from eval stack
+                    yield return new CodeInstruction(OpCodes.Pop);
+                    
+                    // push EnumShaderType to eval stack
                     yield return new CodeInstruction(OpCodes.Ldarg_1);
+                    
                     // call our own instead of original, signature needs to match stack!
                     yield return new CodeInstruction(OpCodes.Call, LoadShaderCallsiteMethod);
                 }
@@ -160,6 +166,7 @@ namespace VolumetricShading
                     break;
             }
             var filename = shader.PassName + ext;
+
             code = VolumetricShadingMod.Instance.ShaderPatcher.Patch(filename, code);
             return HandleIncludes(shader, code);
         }

@@ -2,9 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Games\Vintagestory\1.16.5\Vintagestory.exe</StartProgram>
+    <StartProgram>C:\Games\Vintagestory\1.17.X\Vintagestory.exe</StartProgram>
     <StartArguments>--addModPath="C:\Games\Vintagestory\Modding\VolumetricShading\mods" --dataPath="C:\Games\Vintagestory\ModDevData"</StartArguments>
-    <StartWorkingDirectory>C:\Games\Vintagestory\1.16.5\</StartWorkingDirectory>
+    <StartWorkingDirectory>C:\Games\Vintagestory\1.17.X\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <StartAction>Program</StartAction>
@@ -13,6 +13,6 @@
     <StartWorkingDirectory>C:\Games\Vintagestory\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>C:\Games\Vintagestory\1.16.5\;C:\Games\Vintagestory\1.16.5\Mods\;C:\Games\Vintagestory\1.16.5\Lib\</ReferencePath>
+    <ReferencePath>C:\Games\Vintagestory\1.17.X\;C:\Games\Vintagestory\1.17.X\Mods\;C:\Games\Vintagestory\1.17.X\Lib\</ReferencePath>
   </PropertyGroup>
 </Project>
