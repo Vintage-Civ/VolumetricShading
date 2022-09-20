@@ -223,30 +223,35 @@ namespace VolumetricShading
         private static readonly MethodInfo RegisterShaderProgramCallsiteMethod =
             typeof(ShaderRegistryPatches).GetMethod("RegisterShaderProgramCallsite");
 
+
         [HarmonyPatch("RegisterShaderProgram")]
         [HarmonyPatch(new[] {typeof(string), typeof(ShaderProgram)})]
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> RegisterShaderProgramTranspiler(
             IEnumerable<CodeInstruction> instructions)
         {
+            var set_Item_method = AccessTools.Method(typeof(Dictionary<string, int>), "set_Item");
+
             var found = false;
             var generated = false;
             foreach (var instruction in instructions)
             {
                 if (found && !generated)
                 {
-                    generated = true; 
+                    generated = true;
                     yield return new CodeInstruction(OpCodes.Ldsfld, IncludesField)
                         .WithLabels(instruction.labels);
                     yield return new CodeInstruction(OpCodes.Call, RegisterShaderProgramCallsiteMethod);
-                    
+
                     instruction.labels.Clear();
                 }
-                
+
                 yield return instruction;
-                if (instruction.opcode != OpCodes.Endfinally) continue;
-                
-                found = true;
+
+                if (instruction.opcode == OpCodes.Callvirt && (instruction.operand as MethodInfo) == set_Item_method)
+                {
+                    found = true;
+                }
             }
 
             if (!found)
