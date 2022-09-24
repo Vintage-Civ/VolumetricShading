@@ -143,11 +143,6 @@
           "content": "rgbaCloud.a = alpha * clamp(rgbaCloud.a, 0, 1);\n#if GODRAYS > 0\nprepareVolumetricLightingFlat(lightPosition);\n#endif\ncalcShadowMapCoords(modelViewMatrix, vec4(vexPos, 1.0));\n"
         },
         {
-          "type": "start",
-          "filename": "entityanimated.fsh",
-          "content": "in vec3 vertexPosition;"
-        },
-        {
           "type": "token",
           "filename": "entityanimated.fsh",
           "tokens": "#if SSAOLEVEL > 0 outGPosition",
@@ -168,7 +163,7 @@
         {
           "type": "start",
           "filename": "entityanimated.vsh",
-          "content": "out vec3 vertexPosition;\n#if GODRAYS > 0\nuniform vec3 lightPosition;\n#endif\n"
+          "content": "#if GODRAYS > 0\nuniform vec3 lightPosition;\n#endif\n"
         },
         {
           "type": "start",

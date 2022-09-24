@@ -167,7 +167,15 @@ namespace VolumetricShading
             }
             var filename = shader.PassName + ext;
 
+
+
             code = VolumetricShadingMod.Instance.ShaderPatcher.Patch(filename, code);
+
+            if (filename == "chunkliquid.fsh")
+            {
+
+            }
+
             return HandleIncludes(shader, code);
         }
 

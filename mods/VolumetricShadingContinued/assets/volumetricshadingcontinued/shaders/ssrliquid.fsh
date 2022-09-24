@@ -6,6 +6,7 @@ uniform mat4 modelViewMatrix;
 uniform float dropletIntensity = 0;
 uniform float playerUnderwater;
 uniform vec4 cameraWorldPosition;
+uniform float windWaveCounter;
 
 in vec4 worldPos;
 in vec4 fragPosition;
