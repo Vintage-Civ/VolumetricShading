@@ -65,8 +65,8 @@
         {
           "type": "token",
           "filename": "chunkopaque.fsh",
-          "tokens": "vec4(fragPosition.xyz, fogAmount + glowLevel);",
-          "content": "vec4(fragPosition.xyz, fogAmount + glowLevel + godrayLevel * VOLUMETRIC_SSAO_DECLINE);"
+          "tokens": "vec4(camPos.xyz, fogAmount * 2 + glowLevel);",
+          "content": "vec4(camPos.xyz, fogAmount * 2 + glowLevel + godrayLevel * VOLUMETRIC_SSAO_DECLINE);"
         },
         {
           "type": "start",
@@ -88,8 +88,8 @@
         {
           "type": "token",
           "filename": "chunktopsoil.fsh",
-          "tokens": "vec4(fragPosition.xyz, fogAmount + glowLevel);",
-          "content": "vec4(fragPosition.xyz, fogAmount + glowLevel + scatterAmt * VOLUMETRIC_SSAO_DECLINE);"
+          "tokens": "vec4(fragPosition.xyz, fogAmount * 2 + glowLevel);",
+          "content": "vec4(fragPosition.xyz, fogAmount * 2 + glowLevel + scatterAmt * VOLUMETRIC_SSAO_DECLINE);"
         },
         {
           "type": "token",
@@ -139,8 +139,8 @@
         {
           "type": "token",
           "filename": "clouds.vsh",
-          "tokens": "rgbaCloud.a = clamp(rgbaCloud.a, 0, 1);",
-          "content": "rgbaCloud.a = clamp(rgbaCloud.a, 0, 1);\n#if GODRAYS > 0\nprepareVolumetricLightingFlat(lightPosition);\n#endif\ncalcShadowMapCoords(modelViewMatrix, vec4(vexPos, 1.0));\n"
+          "tokens": "rgbaCloud.a = alpha * clamp(rgbaCloud.a, 0, 1);",
+          "content": "rgbaCloud.a = alpha * clamp(rgbaCloud.a, 0, 1);\n#if GODRAYS > 0\nprepareVolumetricLightingFlat(lightPosition);\n#endif\ncalcShadowMapCoords(modelViewMatrix, vec4(vexPos, 1.0));\n"
         },
         {
           "type": "start",
@@ -195,8 +195,8 @@
         {
           "type": "token",
           "filename": "entityanimated.vsh",
-          "tokens": "worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);",
-          "content": "worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);\nvertexPosition = worldPos.xyz;\n"
+          "tokens": "worldPos = applyVertexWarping(renderFlags, worldPos);",
+          "content": "worldPos = applyVertexWarping(renderFlags, worldPos);\nvertexPosition = worldPos.xyz;\n"
         },
         {
           "type": "token",
