@@ -14,5 +14,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ReferencePath>C:\Games\Vintagestory\1.17.X\;C:\Games\Vintagestory\1.17.X\Mods\;C:\Games\Vintagestory\1.17.X\Lib\</ReferencePath>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

@@ -196,7 +196,6 @@ namespace VolumetricShading.Gui
 
         private void ToggleDeferredLighting(bool enabled)
         {
-            ModSettings.DeferredLightingEnabled = enabled;
             capi.GetClientPlatformAbstract().RebuildFrameBuffers();
             capi.Shader.ReloadShaders();
             RefreshValues();

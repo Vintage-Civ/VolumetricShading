@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public class JsonPatchLoader
     {

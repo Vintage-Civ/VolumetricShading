@@ -8,7 +8,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.Client.NoObf;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public class ShaderInjector
     {

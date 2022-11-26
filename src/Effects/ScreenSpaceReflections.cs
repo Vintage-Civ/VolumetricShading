@@ -7,31 +7,10 @@ using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
-using VolumetricShading.Patch;
+using VolumetricShading.ShaderPatching;
 
 namespace VolumetricShading.Effects
 {
-    public enum EnumSSRFB
-    {
-        SSR,
-        Out,
-        Caustics,
-
-        Count
-    }
-
-    public enum EnumSSRShaders
-    {
-        Liquid,
-        Opaque,
-        Transparent,
-        Topsoil,
-        Out,
-        Caustics,
-        
-        Count
-    }
-    
     public class ScreenSpaceReflections : IRenderer
     {
         private readonly VolumetricShadingMod _mod;
@@ -257,7 +236,7 @@ namespace VolumetricShading.Effects
                     });
             }
 
-            Framebuffers.CheckStatus();
+            FrameBufferUtil.CheckStatus();
             _framebuffers[(int) EnumSSRFB.SSR] = framebuffer;
 
             // setup output framebuffer
@@ -271,7 +250,7 @@ namespace VolumetricShading.Effects
             framebuffer.SetupColorTexture(0);
 
             GL.DrawBuffer(DrawBufferMode.ColorAttachment0);
-            Framebuffers.CheckStatus();
+            FrameBufferUtil.CheckStatus();
             _framebuffers[(int) EnumSSRFB.Out] = framebuffer;
 
             if (_causticsEnabled)
@@ -286,7 +265,7 @@ namespace VolumetricShading.Effects
                 framebuffer.SetupSingleColorTexture(0);
                 
                 GL.DrawBuffer(DrawBufferMode.ColorAttachment0);
-                Framebuffers.CheckStatus();
+                FrameBufferUtil.CheckStatus();
                 _framebuffers[(int) EnumSSRFB.Caustics] = framebuffer;
             }
 

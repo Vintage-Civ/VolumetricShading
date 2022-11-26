@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public interface IShaderProperty
     {

@@ -5,7 +5,7 @@ using HarmonyLib;
 using Vintagestory.API.Util;
 using VolumetricShading.Effects;
 using VolumetricShading.Gui;
-using VolumetricShading.Patch;
+using VolumetricShading.ShaderPatching;
 
 namespace VolumetricShading
 {

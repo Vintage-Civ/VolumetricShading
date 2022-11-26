@@ -53,7 +53,7 @@
           "type": "token",
           "filename": "standard.fsh",
           "tokens": "outColor *= vec4(b, b, b, 1);",
-          "content": "//outColor *= vec4(b, b, b, 1);\n"
+          "content": "\n"
         },
         {
           "type": "token",

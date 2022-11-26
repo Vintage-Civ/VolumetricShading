@@ -1,6 +1,6 @@
 using Vintagestory.API.Client;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public interface IShaderPatch
     {

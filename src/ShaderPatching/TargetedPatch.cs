@@ -1,7 +1,7 @@
 using System;
 using Vintagestory.API.Client;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public abstract class TargetedPatch : IShaderPatch
     {

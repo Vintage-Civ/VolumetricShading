@@ -5,7 +5,7 @@ using Vintagestory.Client.NoObf;
 
 namespace VolumetricShading
 {
-    public static class Framebuffers
+    public static class FrameBufferUtil
     {
         public static void SetupDepthTexture(this FrameBufferRef fbRef)
         {

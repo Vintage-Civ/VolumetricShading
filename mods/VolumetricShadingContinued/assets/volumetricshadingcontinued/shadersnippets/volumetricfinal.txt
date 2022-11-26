@@ -10,3 +10,4 @@ if (maxComp > 0.005) {
     color.rgb = min(color.rgb, vec3(1));
     color.a=1;
 }
+//color.rgb = grc.rgb * maxComp;

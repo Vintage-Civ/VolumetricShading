@@ -166,10 +166,6 @@ namespace VolumetricShading
         public static bool UnderwaterTweaksEnabledSet =>
             ClientSettings.Inst.Bool.Exists("volumetricshading_underwaterTweaks");
 
-        public static bool DeferredLightingEnabled
-        {
-            get => ClientSettings.Inst.GetBoolSetting("volumetricshading_deferredLighting");
-            set => ClientSettings.Inst.Bool["volumetricshading_deferredLighting"] = value;
-        }
+        public static bool DeferredLightingEnabled => true;
     }
 }

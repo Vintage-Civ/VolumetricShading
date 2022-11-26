@@ -1,5 +1,5 @@
 using Vintagestory.Client.NoObf;
-using VolumetricShading.Patch;
+using VolumetricShading.ShaderPatching;
 
 namespace VolumetricShading.Effects
 {

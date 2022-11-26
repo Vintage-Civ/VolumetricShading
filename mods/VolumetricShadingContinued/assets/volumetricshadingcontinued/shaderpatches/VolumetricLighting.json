@@ -243,6 +243,40 @@
           "filename": "mechpower.vsh",
           "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
           "content": "vertPos = worldPos.xyz;\ncalcShadowMapCoords(modelViewMatrix, worldPos);\n#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaBlockIn);\n#endif\n"
+        },
+        {
+          "type": "start",
+          "filename": "grass.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "grass.vsh",
+          "tokens": "normal = unpackNormal(renderFlagsIn);",
+          "content": "normal = unpackNormal(renderFlagsIn);\n#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "grass.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "calcShadowMapCoords(modelViewMatrix, worldPos);\n#if GODRAYS > 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "start",
+          "filename": "flowers.vsh",
+          "snippet": "volumetriclightposition.txt"
+        },
+        {
+          "type": "token",
+          "filename": "flowers.vsh",
+          "tokens": "normal = unpackNormal(renderFlagsIn);",
+          "content": "normal = unpackNormal(renderFlagsIn);\n#if GODRAYS > 0 && VSMOD_DEFERREDLIGHTING == 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
+        },
+        {
+          "type": "token",
+          "filename": "flowers.vsh",
+          "tokens": "calcShadowMapCoords(modelViewMatrix, worldPos);",
+          "content": "calcShadowMapCoords(modelViewMatrix, worldPos);\n#if GODRAYS > 0\nprepareVolumetricLighting(lightPosition, rgbaLightIn);\n#endif\n"
         }
       ]
 }

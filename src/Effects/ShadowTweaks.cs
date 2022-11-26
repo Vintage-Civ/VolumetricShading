@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 using Vintagestory.API.Client;
 using Vintagestory.Client.NoObf;
-using VolumetricShading.Patch;
+using VolumetricShading.ShaderPatching;
 
 namespace VolumetricShading.Effects
 {

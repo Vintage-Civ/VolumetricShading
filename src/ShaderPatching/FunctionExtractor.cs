@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public class FunctionExtractor
     {

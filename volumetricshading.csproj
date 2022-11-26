@@ -36,6 +36,7 @@
     <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\1.17.2\Lib\0Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\Lib\OpenTK.dll</HintPath>
@@ -65,6 +66,8 @@
   <ItemGroup>
     <Content Include="modinfo.json" />
     <Compile Include="src\Effects\DeferredLighting.cs" />
+    <Compile Include="src\Enum\EnumSSRFB.cs" />
+    <Compile Include="src\Enum\EnumSSRShaders.cs" />
     <Compile Include="src\Effects\OverexposureEffect.cs" />
     <Compile Include="src\Effects\ScreenSpaceDirectionalOcclusion.cs" />
     <Compile Include="src\Effects\ScreenSpaceReflections.cs" />
@@ -72,30 +75,36 @@
     <Compile Include="src\Effects\UnderwaterTweaks.cs" />
     <Compile Include="src\Effects\VolumetricLighting.cs" />
     <Compile Include="src\Events.cs" />
-    <Compile Include="src\Framebuffers.cs" />
+    <Compile Include="src\Util\FrameBufferUtil.cs" />
     <Compile Include="src\Gui\AdvancedOptionsDialog.cs" />
     <Compile Include="src\Gui\ConfigGui.cs" />
     <Compile Include="src\Gui\OverexposureGui.cs" />
     <Compile Include="src\Gui\ScreenSpaceReflectionsGui.cs" />
     <Compile Include="src\Gui\ShadowTweaksGui.cs" />
     <Compile Include="src\Gui\VolumetricLightingGui.cs" />
-    <Compile Include="src\HarmonyPatches.cs" />
+    <Compile Include="src\HarmonyPatches\AmbientManagerPatches.cs" />
+    <Compile Include="src\HarmonyPatches\IceAndGlassPatches.cs" />
     <Compile Include="src\ModSettings.cs" />
     <Compile Include="src\Enum\EnumShaderPatchType.cs" />
-    <Compile Include="src\Patch\FunctionExtractor.cs" />
-    <Compile Include="src\Patch\IShaderPatch.cs" />
-    <Compile Include="src\Patch\JsonShaderPatch.cs" />
-    <Compile Include="src\Patch\JsonShaderPatchContainer.cs" />
-    <Compile Include="src\Patch\RegexPatch.cs" />
-    <Compile Include="src\Patch\ShaderInjector.cs" />
-    <Compile Include="src\Patch\ShaderPatcher.cs" />
-    <Compile Include="src\Patch\ShaderProperty.cs" />
-    <Compile Include="src\Patch\StartPatch.cs" />
-    <Compile Include="src\Patch\TargetedPatch.cs" />
-    <Compile Include="src\Patch\TokenPatch.cs" />
-    <Compile Include="src\Patch\JsonPatchLoader.cs" />
-    <Compile Include="src\ReflectionHelper.cs" />
+    <Compile Include="src\ShaderPatching\FunctionExtractor.cs" />
+    <Compile Include="src\Interfaces\IShaderPatch.cs" />
+    <Compile Include="src\ShaderPatching\JsonShaderPatch.cs" />
+    <Compile Include="src\ShaderPatching\JsonShaderPatchContainer.cs" />
+    <Compile Include="src\ShaderPatching\RegexPatch.cs" />
+    <Compile Include="src\ShaderPatching\ShaderInjector.cs" />
+    <Compile Include="src\ShaderPatching\ShaderPatcher.cs" />
+    <Compile Include="src\ShaderPatching\ShaderProperty.cs" />
+    <Compile Include="src\ShaderPatching\StartPatch.cs" />
+    <Compile Include="src\ShaderPatching\TargetedPatch.cs" />
+    <Compile Include="src\ShaderPatching\TokenPatch.cs" />
+    <Compile Include="src\ShaderPatching\JsonPatchLoader.cs" />
+    <Compile Include="src\HarmonyPatches\PlatformPatches.cs" />
+    <Compile Include="src\Util\ReflectionHelper.cs" />
+    <Compile Include="src\HarmonyPatches\ShaderRegistryPatches.cs" />
+    <Compile Include="src\HarmonyPatches\ShaderProgramBasePatches.cs" />
     <Compile Include="src\Shaders.cs" />
+    <Compile Include="src\HarmonyPatches\SystemRenderShadowMapPatches.cs" />
+    <Compile Include="src\HarmonyPatches\SunMoonPatches.cs" />
     <Compile Include="src\Uniforms.cs" />
     <Compile Include="src\VolumetricShadingMod.cs" />
   </ItemGroup>

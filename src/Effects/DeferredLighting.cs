@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using Vintagestory.API.Client;
 using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
-using VolumetricShading.Patch;
+using VolumetricShading.ShaderPatching;
 
 namespace VolumetricShading.Effects
 {
@@ -99,7 +99,6 @@ namespace VolumetricShading.Effects
         {
             if (quality == 0 && _enabled)
             {
-                ModSettings.DeferredLightingEnabled = false;
                 _platform.RebuildFrameBuffers();
                 _mod.CApi.Shader.ReloadShaders();
             }
@@ -158,7 +157,7 @@ namespace VolumetricShading.Effects
                 DrawBuffersEnum.ColorAttachment2, DrawBuffersEnum.ColorAttachment3
             });
             
-            Framebuffers.CheckStatus();
+            FrameBufferUtil.CheckStatus();
             _frameBuffer = fb;
 
             _screenQuad = _platform.GetScreenQuad();

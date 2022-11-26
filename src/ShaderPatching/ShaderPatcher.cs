@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 
-namespace VolumetricShading.Patch
+namespace VolumetricShading.ShaderPatching
 {
     public class ShaderPatcher
     {
@@ -66,6 +66,10 @@ namespace VolumetricShading.Patch
 
         public string Patch(string filename, string code, bool cache = false)
         {
+            if (filename == "final.fsh")
+            {
+
+            }
             if (cache && Cache.ContainsKey(filename))
                 return Cache[filename];
             

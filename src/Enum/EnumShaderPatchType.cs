@@ -1,4 +1,4 @@
-﻿namespace VolumetricShading.Patch
+﻿namespace VolumetricShading.ShaderPatching
 {
     public enum EnumShaderPatchType
     {
