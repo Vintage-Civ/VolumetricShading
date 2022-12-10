@@ -4,6 +4,6 @@
   "name": "Volumetric Shading Continued",
   "authors": [ "xxmicloxx", "Novocain" ],
   "description": "Adds multiple shader changes to the game. (Unofficial Continuation)",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "side":  "client"
 }
