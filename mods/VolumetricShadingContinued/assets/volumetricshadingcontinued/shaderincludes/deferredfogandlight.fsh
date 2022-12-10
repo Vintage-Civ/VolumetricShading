@@ -6,6 +6,8 @@ uniform mat4 toShadowMapSpaceMatrixFar;
 uniform mat4 toShadowMapSpaceMatrixNear;
 #endif
 
+#include noise2d.ash
+
 void calcShadowMapCoords(vec4 worldPos, out vec4 shadowCoordsNear, out vec4 shadowCoordsFar) {
     float nearSub = 0;
     #if SHADOWQUALITY > 0
@@ -200,8 +202,9 @@ float calculateVolumetricScatterDeferred(vec4 worldPos, vec4 cameraPos) {
     vec4 shadowCoordsFar = toShadowMapSpaceMatrixFar * worldPos;
     vec4 shadowRayStart = toShadowMapSpaceMatrixFar * cameraPos;
     vec4 shadowLightPos = toShadowMapSpaceMatrixFar * vec4(lightPosition, 0.0);
-    
-    float dither = fract(0.75487765 * gl_FragCoord.x + 0.56984026 * gl_FragCoord.y);
+    ivec2 sVec = ivec2(gl_FragCoord.xy / 2); 
+
+    float dither = (sVec.x + (sVec.y % 2)) % 2 == 0 ? 1.0 : 0.0;
 
     const int maxSamples = 6;
 
